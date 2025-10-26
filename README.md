@@ -1,5 +1,5 @@
 # egg
-## egg, the EasyGoing Generator ver. 1.0 for 1.21.x
+## egg, the EasyGoing Generator ver. 1.1.0 for 1.21.x
 
 This is being developed with the goal of “providing functional features at the bare minimum level required for practical use.”
 
