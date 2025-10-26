@@ -1,15 +1,11 @@
 ## Get simple arctan value.
 # score <<m~fixed  <<| Slope m ~fixed
-# return           >>| Arctan value ~fixed
+# return           >>| Arctan degrees value ~fixed
 
-## Plain atan.
-scoreboard players operation #egg:math/-/cycl/atan|<<m~fixed -- = #egg:math/fixed/atan|<<m~fixed --
-execute \
-  if score #egg:math/fixed/atan|<<m~fixed -- <= #egg|unit~fixed -- \
-    run return run function egg:math/-/cycl/atan
-
-## Optimiazed atan.
-scoreboard players operation #egg:math/fixed/-/atan_optimized|<<m~fixed -- = #egg:math/fixed/atan|<<m~fixed --
-execute \
-  if score #egg:math/fixed/atan|<<m~fixed -- > #egg|unit~fixed -- \
-    run return run function egg:math/fixed/-/atan_optimized
+## Call.
+scoreboard players operation #egg:-/math/abs|<<x -- = #egg:math/fixed/atan|<<m~fixed --
+execute store result score #egg:-/math/atan|<<m~fixed -- run function egg:-/math/abs
+execute store result score #egg:-/degree/from_radian|<<radian~fixed -- run function egg:-/math/atan
+execute unless score #egg:math/fixed/atan|<<m~fixed -- matches 0.. run scoreboard players operation #egg:-/degree/from_radian|<<radian~fixed -- *= #egg|-1 --
+## Convert to degrees.
+return run function egg:-/degree/from_radian

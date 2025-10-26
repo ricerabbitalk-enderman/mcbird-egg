@@ -1,36 +1,24 @@
 ## Get arcsin and arccos values.
 # score <<x~fixed     <<| Trigonometric value x ~fixed
-# score >>asin~fixed  >>| Asin value ~fixed
-# score >>acos~fixed  >>| Acos value ~fixed
+# score >>asin~fixed  >>| Arcsin degrees value ~fixed
+# score >>acos~fixed  >>| Arccos degrees value ~fixed
 # return              >>| Success
 
-## Get sgn.
-scoreboard players operation #egg:math/sgn|<<x -- = #egg:math/fixed/asin_acos|<<x~fixed --
-execute store result score #egg:math/fixed/asin_acos|sgn -- run function egg:math/sgn
+## Correct x.
+execute if score #egg:math/fixed/asin_acos|<<x~fixed -- > #egg|1~fixed -- run scoreboard players operation #egg:math/fixed/asin_acos|<<x~fixed -- = #egg|1~fixed --
+execute if score #egg:math/fixed/asin_acos|<<x~fixed -- < #egg|-1~fixed -- run scoreboard players operation #egg:math/fixed/asin_acos|<<x~fixed -- = #egg|-1~fixed --
 
-## Get abs(x)
-scoreboard players operation #egg:math/abs|<<x -- = #egg:math/fixed/asin_acos|<<x~fixed --
-execute store result score #egg:math/fixed/asin_acos|abs_x~fixed -- run function egg:math/abs
+## Call.
+scoreboard players operation #egg:-/math/asin_acos|<<x~fixed -- = #egg:math/fixed/asin_acos|<<x~fixed --
+function egg:-/math/asin_acos
 
-## Plain asin.
-scoreboard players operation #egg:math/-/cycl/asin|<<x~fixed -- = #egg:math/fixed/asin_acos|abs_x~fixed --
-execute \
-  if score #egg:math/-/cycl/asin|<<x~fixed -- <= #egg|SQRT(1/2)~fixed -- \
-  store result score #egg:math/fixed/asin_acos|>>asin~fixed -- \
-    run function egg:math/-/cycl/asin
-
-## Optimized asin.
-scoreboard players operation #egg:math/fixed/-/asin_optimized|<<x~fixed -- = #egg:math/fixed/asin_acos|abs_x~fixed --
-execute \
-  if score #egg:math/fixed/-/asin_optimized|<<x~fixed -- > #egg|SQRT(1/2)~fixed -- \
-  store result score #egg:math/fixed/asin_acos|>>asin~fixed -- \
-    run function egg:math/fixed/-/asin_optimized
-
-## asin
-scoreboard players operation #egg:math/fixed/asin_acos|>>asin~fixed -- *= #egg:math/fixed/asin_acos|sgn --
-## acos
-scoreboard players operation #egg:math/fixed/asin_acos|>>acos~fixed -- = #egg|pi*1/2~fixed --
-scoreboard players operation #egg:math/fixed/asin_acos|>>acos~fixed -- -= #egg:math/fixed/asin_acos|>>asin~fixed --
+## Convert to degrees.
+# asin
+scoreboard players operation #egg:-/degree/from_radian|<<radian~fixed -- = #egg:-/math/asin_acos|>>asin~fixed --
+execute store result score #egg:math/fixed/asin_acos|>>asin~fixed -- run function egg:-/degree/from_radian
+# acos
+scoreboard players operation #egg:-/degree/from_radian|<<radian~fixed -- = #egg:-/math/asin_acos|>>acos~fixed --
+execute store result score #egg:math/fixed/asin_acos|>>acos~fixed -- run function egg:-/degree/from_radian
 
 ## Success.
 return 1

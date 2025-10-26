@@ -83,7 +83,7 @@ Get Rotation from Motion.
 ## egg:math
 Math functions.
 
-### egg:math/abs
+### egg:-/math/abs
 
 + **score** <<**x** -- :**Integer x**
 + **return** : **|x|**
@@ -92,14 +92,14 @@ Get absolute integer.
 #### Sample
 <pre>
     # Set parameter.
-    scoreboard players set #egg:math/abs|&lt;&lt;x -- -1234
+    scoreboard players set #egg:-/math/abs|&lt;&lt;x -- -1234
     # Call function and get result.
-    execute store result score #abs-x -- run function egg:math/abs
+    execute store result score #abs-x -- run function egg:-/math/abs
     # It will not execute. 0<=|x|
     execute unless score #abs-x -- matches 0.. run return fail
 </pre>
 
-### egg:math/sgn
+### egg:-/math/sgn
 
 + **score** <<**x** -- :**Integer x**
 + **return** : **sgn x**
@@ -108,9 +108,9 @@ Get integer sign.
 #### Sample
 <pre>
     # Set parameter.
-    scoreboard players set #egg:math/sgn|&lt;&lt;x -- -1234
+    scoreboard players set #egg:-/math/sgn|&lt;&lt;x -- -1234
     # Call function and get result.
-    execute store result score #sgn-x -- run function egg:math/sgn
+    execute store result score #sgn-x -- run function egg:-/math/sgn
     # Use sign.
     scoreboard players operation #variable -- *= #sgn-x --
 </pre>

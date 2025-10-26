@@ -183,6 +183,16 @@ scoreboard players set #egg|180 -- 180
 scoreboard players set #egg|270 -- 270
 # 360
 scoreboard players set #egg|360 -- 360
+# -45
+scoreboard players set #egg|-45 -- -45
+# -90
+scoreboard players set #egg|-90 -- -90
+# -180
+scoreboard players set #egg|-180 -- -180
+# -270
+scoreboard players set #egg|-270 -- -270
+# -360
+scoreboard players set #egg|-360 -- -360
 
 ## Load modules.
 function #egg:system/load
