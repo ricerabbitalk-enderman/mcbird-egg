@@ -11,7 +11,7 @@ We plan to implement features broadly across categories as long as they seem usa
 ### Objective
 
 #### score #scoreholder --
--- is the objective used for the scoreholder for variables.
+**--** is the objective used for the scoreholder for variables.
 
 <pre>
     scoreboard playres set #count -- 10
@@ -20,7 +20,7 @@ We plan to implement features broadly across categories as long as they seem usa
 </pre>
 
 ### Naming Convention
-&lt;function&gt; is function name to call.
+**&lt;function&gt;** is function name to call.
 
 #### scoreboard
 + **score** <<**x** :**Integer x** (input)
@@ -80,61 +80,27 @@ Get Rotation from Motion.
     data modify entity @s Motion set from storage egg:3d/rotation_from_motion &gt;&gt;rotation
 </pre>
 
+### egg:3d/scale_motion
+
++ **storage** <<**motion** :**Motion NBT DataTag**
++ **storage** <<**scale** :**Scale**
++ **storage** >>**motion** :**Scaled Motion NBT DataTag**
+Scale Motion.
+#### Sample
+<pre>
+    # Get Motion.
+    data modify storage egg:3d/motion_from_rotation &lt;&lt;rotation set from entity @s Rotation
+    function egg:3d/motion_from_rotation
+    # Set parameters.
+    data modify storage egg:3d/scale_motion &lt;&lt;motion set from storage egg:3d/motion_from_rotation &gt;&gt;motion
+    data modify storage egg:3d/scale_motion &lt;&lt;scale set value 2.5
+    function egg:3d/scale_motion
+    # Get Motion result.
+    data modify entity @s Motion set from storage egg:3d/scale_motion &gt;&gt;motion
+</pre>
+
 ## egg:math
 Math functions.
-
-### egg:-/math/abs
-
-+ **score** <<**x** -- :**Integer x**
-+ **return** : **|x|**
-Get absolute integer.
-
-#### Sample
-<pre>
-    # Set parameter.
-    scoreboard players set #egg:-/math/abs|&lt;&lt;x -- -1234
-    # Call function and get result.
-    execute store result score #abs-x -- run function egg:-/math/abs
-    # It will not execute. 0<=|x|
-    execute unless score #abs-x -- matches 0.. run return fail
-</pre>
-
-### egg:-/math/sgn
-
-+ **score** <<**x** -- :**Integer x**
-+ **return** : **sgn x**
-Get integer sign.
-
-#### Sample
-<pre>
-    # Set parameter.
-    scoreboard players set #egg:-/math/sgn|&lt;&lt;x -- -1234
-    # Call function and get result.
-    execute store result score #sgn-x -- run function egg:-/math/sgn
-    # Use sign.
-    scoreboard players operation #variable -- *= #sgn-x --
-</pre>
-
-### egg:math/scalar
-
-+ **strage** <<**x**~double -- :**Coordinate or vectro x (double) [-128<=x<=128]**
-+ **strage** <<**y**~double -- :**Coordinate or vectro y (double) [-128<=y<=128]**
-+ **strage** <<**z**~double -- :**Coordinate or vectro z (double) [-128<=z<=128]**
-+ **strage** >>**scalar**~double -- :**Scalar value (double)**
-+ **return** : **Success or failure**
-Get scalar value from coordinate or vector.
-
-#### Sample
-<pre>
-    # Set parameter.
-    data modify storage egg:math/scalar &lt;&lt;x~double
-    data modify storage egg:math/scalar &lt;&lt;y~double
-    data modify storage egg:math/scalar &lt;&lt;z~double
-    # Call function.
-    function egg:math/scalar
-    # Use result.
-    execute store result score ... run data get storage egg:math/scalar &gt;&gt;scalar~double
-</pre>
 
 ### egg:math/sin_cos
 
@@ -179,8 +145,8 @@ Get sin and cos and tan.
 ### egg:math/asin_acos
 
 + **strage** <<**x**~double -- :**Coordinate x (double) [-1<=x<=1]**
-+ **strage** >>**asin**~double -- :**Arcsin (double)**
-+ **strage** >>**acos**~double -- :**Arccos (double)**
++ **strage** >>**asin**~double -- :**Arcsin[degree] (double)**
++ **strage** >>**acos**~double -- :**Arccos[degree] (double)**
 + **return** : **Success or failure**
 Get arcsin and arccos.
 
@@ -195,35 +161,19 @@ Get arcsin and arccos.
     execute store result score ... run data get storage egg:math/asin_acos &gt;&gt;acos~double
 </pre>
 
-### egg:math/atan
-
-+ **strage** <<**m**~double -- :**Slope m (double) [Unlimited]**
-+ **strage** >>**atan**~double -- :**Arctan (double)**
-+ **return** : **Success or failure**
-Get arctan considering the quadrant.
-
-#### Sample
-<pre>
-    # Set parameter.
-    data modify storage egg:math/atan &lt;&lt;m~double
-    # Call function.
-    function egg:math/atan
-    # Use result.
-    execute store result score ... run data get storage egg:math/atan &gt;&gt;atan~double
-</pre>
-
 ### egg:math/atan2
 
-+ **strage** <<**x**~double -- :**Slope x (double) [-1<=x<=1]**
-+ **strage** <<**y**~double -- :**Slope y (double) [-1<=y<=1]**
-+ **strage** >>**atan**~double -- :**Arctan (double)**
++ **strage** <<**x**~double -- :**Coordinate x (double) [-1<=x<=1]**
++ **strage** <<**y**~double -- :**Coordinate y (double) [-1<=y<=1]**
++ **strage** >>**atan**~double -- :**Arctan[degree] (double)**
 + **return** : **Success or failure**
-Get arctan for .
+Get arctan.
 
 #### Sample
 <pre>
     # Set parameter.
-    data modify storage egg:math/atan2 &lt;&lt;m~double
+    data modify storage egg:math/atan2 &lt;&lt;x~double
+    data modify storage egg:math/atan2 &lt;&lt;y~double
     # Call function.
     function egg:math/atan2
     # Use result.
