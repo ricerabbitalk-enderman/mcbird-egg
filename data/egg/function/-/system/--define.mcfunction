@@ -1,6 +1,10 @@
-## Define scoreboards.
-# for Variable.
-scoreboard objectives add -- dummy
+## VERSION
+# Major
+scoreboard players set #egg|VERSION.MAJOR -- 1
+# Minor
+scoreboard players set #egg|VERSION.MINOR -- 2
+# Build
+scoreboard players set #egg|VERSION.BUILD -- 0
 
 ## MIN/MAX
 # MAX
@@ -33,6 +37,10 @@ scoreboard players set #egg|8 -- 8
 scoreboard players set #egg|9 -- 9
 # 10
 scoreboard players set #egg|10 -- 10
+# 15
+scoreboard players set #egg|15 -- 15
+# 20
+scoreboard players set #egg|20 -- 20
 # 100
 scoreboard players set #egg|100 -- 100
 # 1000
@@ -194,5 +202,5 @@ scoreboard players set #egg|-270 -- -270
 # -360
 scoreboard players set #egg|-360 -- -360
 
-## Load modules.
-function #egg:system/load
+## Define modules.
+function #egg:system/define

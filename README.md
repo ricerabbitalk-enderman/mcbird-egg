@@ -180,3 +180,67 @@ Get arctan.
     execute store result score ... run data get storage egg:math/atan2 &gt;&gt;atan~double
 </pre>
 
+## egg:uuid
+UUID handling functions.
+
+### egg:uuid/equals
++ **storage** <<**this** :This entity's UUID
++ **storage** <<**that** :That entity's UUID
++ **return**  :This and that are equal
+Compare UUIDs.
+
+#### Sample
+<pre>
+    # Set this.
+    data modify storage egg:uuid/equals &lt;&lt;this set from entity @s UUID
+    # Set that.
+    data modify storage egg:uuid/equals &lt;&lt;that set from entity @p UUID
+    # If they are equals, say "it's me.".
+    execute if function egg:uuid/equals run say "it's me."
+</pre>
+
+### egg:uuid/-match
++ **storage** <<**target** :Target entity's UUID
++ **return**  :This and that are equal
+@s and target match by UUID.
+
+#### Sample
+<pre>
+    # Set target.
+    data modify storage egg:uuid/match &lt;&lt;target set from entity @s UUID
+    # Find my wolf".
+    execute as @e[type=wolf] if function egg:uuid/match run say "found my wolf!"
+</pre>
+
+## egg:input
+Input informations functions.
+
+### egg:input/-pressed
++ return  >>| Ticks that have not been pressed yet.
+Get whether it is the first pressed tick.
+
+#### Sample
+<pre>
+    # Get Information.
+    execute store result score ... as @p run function egg:input/-pressed
+</pre>
+
+### egg:input/-pushed
++ return  >>| Ticks while continuously pressed.
+Get whether it is currently pressed.
+
+#### Sample
+<pre>
+    # Get Information.
+    execute store result score ... as @p run function egg:input/-pushed
+</pre>
+
+### egg:input/-released
++ return  >>| Ticks that have been continuously pressed.
+Get whether the key has been released.
+
+#### Sample
+<pre>
+    # Get Information.
+    execute store result score ... as @p run function egg:input/-released
+</pre>
