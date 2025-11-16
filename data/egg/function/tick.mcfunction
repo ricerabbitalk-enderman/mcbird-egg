@@ -1,2 +1,2 @@
 ## Tick.
-function egg:-/system/--tick
+function egg:__/system/__tick

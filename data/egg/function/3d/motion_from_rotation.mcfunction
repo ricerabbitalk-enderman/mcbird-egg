@@ -4,11 +4,11 @@
 
 ## Fixed from double.
 # yaw angle
-data modify storage egg:-/point/fixed/from_double <<~double set from storage egg:3d/motion_from_rotation <<rotation[0]
-execute store result score #egg:3d/motion_from_rotation|yaw~fixed -- run function egg:-/point/fixed/from_double
+data modify storage egg:__/point/fixed/from_double <<~double set from storage egg:3d/motion_from_rotation <<rotation[0]
+execute store result score #egg:3d/motion_from_rotation|yaw~fixed -- run function egg:__/point/fixed/from_double
 # pitch angle
-data modify storage egg:-/point/fixed/from_double <<~double set from storage egg:3d/motion_from_rotation <<rotation[1]
-execute store result score #egg:3d/motion_from_rotation|pitch~fixed -- run function egg:-/point/fixed/from_double
+data modify storage egg:__/point/fixed/from_double <<~double set from storage egg:3d/motion_from_rotation <<rotation[1]
+execute store result score #egg:3d/motion_from_rotation|pitch~fixed -- run function egg:__/point/fixed/from_double
 
 ## Sin and cos values from yaw angle.
 scoreboard players operation #egg:math/fixed/sin_cos|<<degree~fixed -- = #egg:3d/motion_from_rotation|yaw~fixed --
@@ -39,17 +39,17 @@ scoreboard players operation #egg:3d/motion_from_rotation|z~fixed -- /= #egg|uni
 ## Fixed to double.
 data modify storage egg:3d/motion_from_rotation >>motion set value []
 # x
-scoreboard players operation #egg:-/point/fixed/to_double|<<~fixed -- = #egg:3d/motion_from_rotation|x~fixed --
-function egg:-/point/fixed/to_double
-data modify storage egg:3d/motion_from_rotation >>motion append from storage egg:-/point/fixed/to_double >>~double
+scoreboard players operation #egg:__/point/fixed/to_double|<<~fixed -- = #egg:3d/motion_from_rotation|x~fixed --
+function egg:__/point/fixed/to_double
+data modify storage egg:3d/motion_from_rotation >>motion append from storage egg:__/point/fixed/to_double >>~double
 # y
-scoreboard players operation #egg:-/point/fixed/to_double|<<~fixed -- = #egg:3d/motion_from_rotation|y~fixed --
-function egg:-/point/fixed/to_double
-data modify storage egg:3d/motion_from_rotation >>motion append from storage egg:-/point/fixed/to_double >>~double
+scoreboard players operation #egg:__/point/fixed/to_double|<<~fixed -- = #egg:3d/motion_from_rotation|y~fixed --
+function egg:__/point/fixed/to_double
+data modify storage egg:3d/motion_from_rotation >>motion append from storage egg:__/point/fixed/to_double >>~double
 # z
-scoreboard players operation #egg:-/point/fixed/to_double|<<~fixed -- = #egg:3d/motion_from_rotation|z~fixed --
-function egg:-/point/fixed/to_double
-data modify storage egg:3d/motion_from_rotation >>motion append from storage egg:-/point/fixed/to_double >>~double
+scoreboard players operation #egg:__/point/fixed/to_double|<<~fixed -- = #egg:3d/motion_from_rotation|z~fixed --
+function egg:__/point/fixed/to_double
+data modify storage egg:3d/motion_from_rotation >>motion append from storage egg:__/point/fixed/to_double >>~double
 
 ## Success.
 return 1

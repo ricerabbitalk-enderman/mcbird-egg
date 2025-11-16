@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "chick:system/--command"
+    "chick:system/__command"
   ]
 }

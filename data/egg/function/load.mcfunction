@@ -3,6 +3,6 @@
 scoreboard objectives add -- dummy
 
 ## Load.
-function egg:-/system/--load
+function egg:__/system/__load
 ## Define.
-function egg:-/system/--define
+function egg:__/system/__define

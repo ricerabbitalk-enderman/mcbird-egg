@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "egg:input/--unload"
+    "egg:input/__unload"
   ]
 }

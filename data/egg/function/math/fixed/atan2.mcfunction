@@ -24,9 +24,9 @@ execute if score #egg:math/fixed/atan2|x~fixed -- matches ..-1 if score #egg:mat
 execute if score #egg:math/fixed/atan2|x~fixed -- matches 1.. if score #egg:math/fixed/atan2|y~fixed -- matches ..-1 run scoreboard players set #egg:math/fixed/atan2|quadrant -- 4
 
 ## Get Slope m.
-scoreboard players operation #egg:-/operation/devide|<<x~fixed -- = #egg:math/fixed/atan2|y~fixed --
-scoreboard players operation #egg:-/operation/devide|<<y~fixed -- = #egg:math/fixed/atan2|x~fixed --
-execute store result score #egg:math/fixed/atan|<<m~fixed -- run function egg:-/operation/devide
+scoreboard players operation #egg:__/operation/devide|<<x~fixed -- = #egg:math/fixed/atan2|y~fixed --
+scoreboard players operation #egg:__/operation/devide|<<y~fixed -- = #egg:math/fixed/atan2|x~fixed --
+execute store result score #egg:math/fixed/atan|<<m~fixed -- run function egg:__/operation/devide
 ## atan
 execute store result score #egg:math/fixed/atan2|atan~fixed -- run function egg:math/fixed/atan
 
