@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "egg:input/__tick"
+    "egg:input/__tick",
+    "egg:alignment/__tick"
   ]
 }

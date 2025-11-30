@@ -1,0 +1,7 @@
+{
+  "condition": "minecraft:entity_scores",
+  "entity": "this",
+  "scores": {
+    "egg.alignment": {"min": -1, "max": 1}
+  }
+}

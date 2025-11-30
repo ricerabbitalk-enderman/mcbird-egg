@@ -21,7 +21,7 @@ scoreboard players operation #egg:__/math/atan_fraction|term-06~fixed -- = #egg:
 scoreboard players operation #egg:__/math/atan_fraction|term-06~fixed -- *= #egg|6^2/11~fixed --
 scoreboard players operation #egg:__/math/atan_fraction|term-06~fixed -- /= #egg|unit~fixed --
 # 11 + m^2 * 6^2/11
-scoreboard players operation egg:fixed/math/__/atan_gauss|term-06~fixed -- += #egg|11~fixed --
+scoreboard players operation #egg:__/math/atan_fraction|term-06~fixed -- += #egg|11~fixed --
 
 ## term-05
 # 1/term-06

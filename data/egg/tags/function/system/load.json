@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "egg:input/__load"
+    "egg:input/__load",
+    "egg:alignment/__load"
   ]
 }

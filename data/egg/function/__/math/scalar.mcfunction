@@ -45,3 +45,12 @@ execute store result score #egg:__/point/adjusted/to_fixed|<<~adjusted -- run fu
 scoreboard players operation #egg:__/point/adjusted/to_fixed|<<unit~adjusted -- = #egg:__/math/scalar|unit~adjusted --
 # √(x^2+y^2+z^2) ~fixed
 return run function egg:__/point/adjusted/to_fixed
+
+## √(x^2+y^2+z^2)
+# √(x^2+y^2+z^2) ~adjusted
+scoreboard players operation #egg:__/math/sqrt2|<<x -- = #egg:__/math/scalar|term~adjusted --
+scoreboard players operation #egg:__/math/sqrt2|<<unit -- = #egg:__/math/scalar|unit~adjusted --
+execute store result score #egg:__/point/adjusted/to_fixed|<<~adjusted -- run function egg:__/math/sqrt2
+scoreboard players operation #egg:__/point/adjusted/to_fixed|<<unit~adjusted -- = #egg:__/math/scalar|unit~adjusted --
+# √(x^2+y^2+z^2) ~fixed
+return run function egg:__/point/adjusted/to_fixed
