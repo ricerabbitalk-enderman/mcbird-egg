@@ -161,7 +161,6 @@ scoreboard players operation #egg|-270~fixed -- *= #egg|unit~fixed --
 scoreboard players set #egg|-360~fixed -- -360
 scoreboard players operation #egg|-360~fixed -- *= #egg|unit~fixed --
 
-
 ## pi ~fixed
 # pi ~fixed
 data modify storage egg:__/point/fixed/from_double <<~double set value 3.141592654

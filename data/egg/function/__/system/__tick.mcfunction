@@ -8,3 +8,5 @@ function #egg:system/tick
 
 ## Revoke advancement trigger.
 advancement revoke @a only egg:device
+
+return 1

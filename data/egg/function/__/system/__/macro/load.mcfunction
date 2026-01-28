@@ -1,0 +1,1 @@
+$return run function egg:bdengine/$(model)/$(animation)

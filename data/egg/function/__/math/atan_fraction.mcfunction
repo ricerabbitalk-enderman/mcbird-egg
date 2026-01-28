@@ -49,7 +49,6 @@ scoreboard players operation #egg:__/math/atan_fraction|term-04~fixed -- *= #egg
 # 7 + 2^2 * m^2/term-05
 scoreboard players operation #egg:__/math/atan_fraction|term-04~fixed -- += #egg|7~fixed --
 
-
 ## term-03
 # 1/term-04
 scoreboard players operation #egg:__/math/atan_fraction|1/term-04~fixed -- = #egg|double~fixed --

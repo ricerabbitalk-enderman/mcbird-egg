@@ -1,5 +1,8 @@
-# egg
-## egg, the EasyGoing Generator ver. 1.2.1 for 1.21.x
+# mcbird-egg
+
+## egg, the EasyGoing Generator ver. 1.4.0 for 1.21.11
+
+[English](README.md) / [日本語](README-jp.md)
 
 This is being developed with the goal of “providing functional features at the bare minimum level required for practical use.”
 
@@ -8,239 +11,695 @@ Under the name **egg, the EasyGoing Generator**, we aim to make it as easy as po
 We plan to implement features broadly across categories as long as they seem usable.
 
 # Reference
-### Objective
 
-#### score #scoreholder --
-**--** is the objective used for the scoreholder for variables.
+## Objective
 
-<pre>
-    scoreboard playres set #count -- 10
-    scoreboard players operation #hp -- -= #damage --
-    return run scoreboard players get #result --
-</pre>
+### score #var_name --
 
-### Naming Convention
-**&lt;function&gt;** is function name to call.
+**--** is the objective used for variables.
 
-#### scoreboard
-+ **score** <<**x** :**Integer x** (input)
-+ **score** >>**type** :**Result type** (output)
-+ **return** :**Result value** (output)
-<pre>
-    # Set parameter.
-    scoreboard playres operation #&lt;function&gt;|&lt;&lt;x --
-    # Call function and get result.
-    execute store result score ##result -- function &lt;function&gt;
-    # Use additional result.
-    execute store result entity @s ... run scoreboard players get #&lt;function&gt;|&gt;&gt;type --
-</pre>
+```mcfunction
+  # Count.
+  scoreboard playres set #count -- 10-
+  # Damage calculation.
+  scoreboard players operation #hp -- -= #damage --
+  # Return result.
+  return run scoreboard players get #result --
 
-#### storage
-+ **storage** <<**x** :**Integer x** (input)
-+ **storage** >>**result** :**Result value** (output)
-<pre>
-    # Set parameter.
-    data modify storage &lt;function&gt; &lt;&lt;x set from ...
-    # Call function.
-    function &lt;function&gt;
-    # Get result.
-    execute store result entity @s ... run data get storage &lt;function&gt; &gt;&gt;result
-</pre>
+  # NG! do not use on actual entities.
+  scoreboard players set @s -- 1234
+```
+
+## Naming Convention
+
+**(function)** is the name of function.
+
+### scoreboard
+
+|Notation|Meaning|
+|:-|:-|
+|**score** #(function)\|<<**argument**|input/argument|
+|**score** #(function)\|>>**result**|output/result|
+
+To avoid name collisions in the scoreboard, the specification requires that function names be prefixed.
+
+This allows the function's inputs and outputs to be clearly distinguished by the function name.
+
+```mcfunction
+  ## Example: input/argument
+  # Set arguments.
+  execute store result score #xxx:heal|<<hp -- run data get entity @s Health
+  scoreboard players set #xxx:heal|<<amount -- 10
+  scoreboard players set #xxx:heal|<<percent -- 20
+  # Call function.
+  function xxx:heal
+
+  ## Example: output/result + input/argument
+  # Get rotation.
+  function xxx:get_rotation
+  # Get result and change rotation.
+  scoreboard players add #xxx:get_rotation|>>yaw -- 20
+  scoreboard players add #xxx:get_rotation|>>pitch -- 30
+  # Set argument.
+  scoreboard players operation #xxx:rotate|<<yaw -- = #xxx:get_rotation|>>yaw
+  scoreboard players operation #xxx:rotate|<<pitch -- = #xxx:get_rotation|>>pitch
+  # Rotate.
+  function xxx:rotate
+```
+
+### storage
+
+|Notation|Meaning|
+|:-|:-|
+|**storage** (function) <<**argument**|input/argument|
+|**storage** (function) >>**result**|output/result|
+
+Like the score, the namespace is the function name.
+
+```mcfunction
+  ## Example: input/argument + output/result (function xxx:tan)
+  # Set argument.
+  data modify storage xxx:sin_cos <<degree set from storage xxx:tan <<degree
+  # Get sin and cos.
+  function xxx:sin_cos
+  # Get result.
+  execute store result score #xxx:tan|sin run data get storage xxx:sin_cos >>sin
+  execute store result score #xxx:tan|cos run data get storage xxx:sin_cos >>cos
+  # Calculate tan.
+  scoreboard players operation #xxx:tan|result -- = #xxx:tan|sin --
+  scoreboard players operation #xxx:tan|result -- /= #xxx:tan|cos --
+  # Return tan.
+  return run scoreboard players get #xxx:tan|result
+```
 
 ## egg:3d
-3D processing functions.
 
-### egg:3d/motion_from_rotation
+**This module consolidates processing related to the game's 3D space.**
 
-+ **storage** <<**rotation** :**Rotation NBT DataTag**
-+ **storage** >>**motion** :**Motion NBT DataTag**
-Get Motion from Rotation.
-#### Sample
-<pre>
-    # Set Rotation parameter.
-    data modify storage egg:3d/motion_from_rotation &lt;&lt;rotation set from entity @s Rotation
-    # Call function.
-    function egg:3d/motion_from_rotation
-    # Get Motion result.
-    data modify entity @s Motion set from storage egg:3d/motion_from_rotation &gt;&gt;motion
-</pre>
+Calculations for 3D positional relationships, orientation, and momentum are performed.
 
-### egg:3d/rotation_from_motion
+The primary targets for reference and manipulation are the Pos, Motion, and Rotation fields within NBT data tags.
 
-+ **storage** <<**motion** :**Motion NBT DataTag**
-+ **storage** >>**rotation** :**Rotation NBT DataTag**
-Get Rotation from Motion.
-#### Sample
-<pre>
-    # Set Motion parameter.
-    data modify storage egg:3d/rotation_from_motion &lt;&lt;motion set from entity @s Motion
-    # Call function.
-    function egg:3d/rotation_from_motion
-    # Get Rotation result.
-    data modify entity @s Motion set from storage egg:3d/rotation_from_motion &gt;&gt;rotation
-</pre>
+### `function egg:3d/motion_from_rotation`
 
-### egg:3d/scale_motion
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`storage egg:3d/motion_from_rotation <<rotation`|in|Rotation data|
+|`storage egg:3d/motion_from_rotation >>motion`|out|Motion data|
+|`return`|out|Succeeded function or not|
 
-+ **storage** <<**motion** :**Motion NBT DataTag**
-+ **storage** <<**scale** :**Scale**
-+ **storage** >>**motion** :**Scaled Motion NBT DataTag**
-Scale Motion.
-#### Sample
-<pre>
-    # Get Motion.
-    data modify storage egg:3d/motion_from_rotation &lt;&lt;rotation set from entity @s Rotation
-    function egg:3d/motion_from_rotation
-    # Set parameters.
-    data modify storage egg:3d/scale_motion &lt;&lt;motion set from storage egg:3d/motion_from_rotation &gt;&gt;motion
-    data modify storage egg:3d/scale_motion &lt;&lt;scale set value 2.5
-    function egg:3d/scale_motion
-    # Get Motion result.
-    data modify entity @s Motion set from storage egg:3d/scale_motion &gt;&gt;motion
-</pre>
+**Get Motion from Rotation.**
+
+Rotation data and Motion data correspond to the Rotation and Motion NBT data tags.
+
+The Motion data obtained is a unit vector (1 tick movement equals 1 block).
+
+Use the function egg:nog/scale_motion to adjust the movement amount.
+
+### `function egg:3d/rotation_from_motion`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`storage egg:3d/rotation_from_motion <<motion`|in|Motion data|
+|`storage egg:3d/rotation_from_motion >>rotation`|out|Rotation data|
+|`return`|out|Succeeded function or not|
+
+**Get Rotation from Motion.**
+
+Rotation data and Motion data correspond to the Rotation and Motion NBT data tags.
+
+Since internal calculations use fixed-point arithmetic, precision varies depending on the values.
+
+For high-precision results, other methods are recommended.
 
 ## egg:math
-Math functions.
 
-### egg:math/sin_cos
+**This is a module for mathematical calculations such as trigonometric functions.**
 
-+ **strage** <<**degree**~double -- :**Degrees (double) [Unlimited]**
-+ **strage** >>**sin**~double -- :**Sin (double)**
-+ **strage** >>**cos**~double -- :**Cos (double)**
-+ **return** : **Success or failure**
-Get sin and cos.
+In this module, input and output parameters are suffixed with ~double, declaring that they accept double inputs and produce double outputs.
 
-#### Sample
-<pre>
-    # Set parameter.
-    data modify storage egg:math/sin_cos &lt;&lt;degree~double
-    # Call function.
-    function egg:math/sin_cos
-    # Use result.
-    execute store result score ... run data get storage egg:math/sin_cos &gt;&gt;sin~double
-    execute store result score ... run data get storage egg:math/sin_cos &gt;&gt;cos~double
-</pre>
+However, note that internal calculations are performed using fixed-point arithmetic, so precision may vary depending on the conditions.
 
-### egg:math/sin_cos_tan
+### `function egg:math/sin_cos`
 
-+ **strage** <<**degree**~double -- :**Degrees (double) [Unlimited]**
-+ **strage** >>**sin**~double -- :**Sin (double)**
-+ **strage** >>**cos**~double -- :**Cos (double)**
-+ **strage** >>**tan**~double -- :**Tan (double)**
-+ **return** : **Success or failure**
-Get sin and cos and tan.
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`storage egg:math/sin_cos <<degree~double`|in|Unlimited degrees|
+|`storage egg:math/sin_cos >>sin~double`|out|Sin value|
+|`storage egg:math/sin_cos >>cos~double`|out|Cos value|
+|`return`|out|Succeeded function or not|
 
-#### Sample
-<pre>
-    # Set parameter.
-    data modify storage egg:math/sin_cos_tan &lt;&lt;degree~double
-    # Call function.
-    function egg:math/sin_cos_tan
-    # Use result.
-    execute store result score ... run data get storage egg:math/sin_cos_tan &gt;&gt;sin~double
-    execute store result score ... run data get storage egg:math/sin_cos_tan &gt;&gt;cos~double
-    execute store result score ... run data get storage egg:math/sin_cos_tan &gt;&gt;tan~double
-</pre>
+**Simultaneously obtains the values of sin and cos for a given angle in degrees.**
 
-### egg:math/asin_acos
+For processing efficiency, sin and cos are calculated as a set.
 
-+ **strage** <<**x**~double -- :**Coordinate x (double) [-1<=x<=1]**
-+ **strage** >>**asin**~double -- :**Arcsin[degree] (double)**
-+ **strage** >>**acos**~double -- :**Arccos[degree] (double)**
-+ **return** : **Success or failure**
-Get arcsin and arccos.
+### `function egg:math/sin_cos_tan`
 
-#### Sample
-<pre>
-    # Set parameter.
-    data modify storage egg:math/asin_acos &lt;&lt;x~double
-    # Call function.
-    function egg:math/asin_acos
-    # Use result.
-    execute store result score ... run data get storage egg:math/asin_acos &gt;&gt;asin~double
-    execute store result score ... run data get storage egg:math/asin_acos &gt;&gt;acos~double
-</pre>
+@function egg:math/sin_cos_tan
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`storage egg:math/sin_cos_tan <<degree~double`|in|Unlimited degrees|
+|`storage egg:math/sin_cos_tan >>sin~double`|out|Sin value|
+|`storage egg:math/sin_cos_tan >>cos~double`|out|Cos value|
+|`storage egg:math/sin_cos_tan >>tan~double`|out|Tan value|
+|`return`|out|Succeeded function or not|
 
-### egg:math/atan2
+**Calculates the values of sin, cos, and tan simultaneously for a given angle in degrees.**
 
-+ **strage** <<**x**~double -- :**Coordinate x (double) [-1<=x<=1]**
-+ **strage** <<**y**~double -- :**Coordinate y (double) [-1<=y<=1]**
-+ **strage** >>**atan**~double -- :**Arctan[degree] (double)**
-+ **return** : **Success or failure**
-Get arctan.
+Since calculating tan from sin/cos yields higher precision than direct tan calculation, all trigonometric values are computed.
 
-#### Sample
-<pre>
-    # Set parameter.
-    data modify storage egg:math/atan2 &lt;&lt;x~double
-    data modify storage egg:math/atan2 &lt;&lt;y~double
-    # Call function.
-    function egg:math/atan2
-    # Use result.
-    execute store result score ... run data get storage egg:math/atan2 &gt;&gt;atan~double
-</pre>
+Fixed-point arithmetic is used, resulting in reduced precision for large values near 90 degrees.
 
-## egg:uuid
-UUID handling functions.
+### `function egg:math/asin_acos`
 
-### egg:uuid/equals
-+ **storage** <<**this** :This entity's UUID
-+ **storage** <<**that** :That entity's UUID
-+ **return**  :This and that are equal
-Compare UUIDs.
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`storage egg:math/asin_acos <<x~double`|in|Trigonometric value x (-1 <= x <= 1)|
+|`storage egg:math/asin_acos >>asin~double`|out|Arcsin value|
+|`storage egg:math/asin_acos >>acos~double`|out|Arccos value|
+|`return`|out|Succeeded function or not|
 
-#### Sample
-<pre>
-    # Set this.
-    data modify storage egg:uuid/equals &lt;&lt;this set from entity @s UUID
-    # Set that.
-    data modify storage egg:uuid/equals &lt;&lt;that set from entity @p UUID
-    # If they are equals, say "it's me.".
-    execute if function egg:uuid/equals run say "it's me."
-</pre>
+**Get arcsin and arccos.**
 
-### egg:uuid/-match
-+ **storage** <<**target** :Target entity's UUID
-+ **return**  :This and that are equal
-@s and target match by UUID.
+To optimize processing efficiency, arcsin and arccos are calculated as a set.
+Arguments outside the range of -1 to 1 are adjusted to fall within this range.
 
-#### Sample
-<pre>
-    # Set target.
-    data modify storage egg:uuid/match &lt;&lt;target set from entity @s UUID
-    # Find my wolf".
-    execute as @e[type=wolf] if function egg:uuid/match run say "found my wolf!"
-</pre>
+If you require strict verification, check beforehand.
+
+### `function egg:math/atan2`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`storage egg:math/atan2 <<x~double`|in|Coordinate x|
+|`storage egg:math/atan2 <<y~double`|in|Coordinate y|
+|`storage egg:math/atan2 >>atan~double`|out|Arctan value|
+|`return`|out|Succeeded function or not|
+
+**Calculate the slope from (x, y) and get the arctan value.**
+
+Fixed-point calculations are acceptable when moderate precision suffices, but consider alternative methods when high precision is required.
+
+Fixed-point systems particularly struggle with extremely large or small numbers, leading to significant precision errors.
+
+Exercise caution when numerical differences between x and y are extreme, such as (10000, 0.0001).
 
 ## egg:input
-Input informations functions.
 
-### egg:input/-pressed
-+ return  >>| Ticks that have not been pressed yet.
-Get whether it is the first pressed tick.
+**This feature detects right-clicks on items within the data component 
 
-#### Sample
-<pre>
-    # Get Information.
-    execute store result score ... as @p run function egg:input/-pressed
-</pre>
+`minecraft:custom_data` that contain `{“egg”:{‘type’:“device”}}`.**
+As a prerequisite, the target `@s` must be holding an item with the data component `minecraft:block_attacks`.
 
-### egg:input/-pushed
-+ return  >>| Ticks while continuously pressed.
-Get whether it is currently pressed.
+If you wish to bypass the actual shield functionality, add the data component to the item as shown below.
+```json
+{
+  "components": {
+    "minecraft:blocks_attacks": {
+      "damage_reductions": [{"base": 0,"factor": 0}]
+    },
+    "minecraft:custom_data": {"egg": {"type": "device"}}
+  }
+}
+```
+Data components are usable in recipes, root tables, etc.
+Hereafter, items possessing this data component will be denoted as `egg:device`.
+This feature is automatically granted to all players.
 
-#### Sample
-<pre>
-    # Get Information.
-    execute store result score ... as @p run function egg:input/-pushed
-</pre>
+### `function egg:input/-pushed`
 
-### egg:input/-released
-+ return  >>| Ticks that have been continuously pressed.
-Get whether the key has been released.
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`return`|out|Number of ticks input continuously|
 
-#### Sample
-<pre>
-    # Get Information.
-    execute store result score ... as @p run function egg:input/-released
-</pre>
+**Determine whether player `@s` is right-clicking on `egg:device`. Both hands are considered.**
+
+This returns true = “number of ticks input is held” continuously while right-clicked.
+
+To detect a single press for one-time activation, use `function egg:input/-triggered`.
+
+### `function egg:input/-released`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`return`|out|Ticks that have been continuously pressed|
+
+**Detects whether the player `@s` has stopped right-clicking on `egg:device`. This applies to both hands.**
+
+This returns true only for the first tick that was no longer right-clicked, representing the number of ticks that were continuously input.
+
+### `function egg:input/-triggered`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`return`|out|Number of ticks without input|
+
+**Determine whether player `@s` is right-clicking on `egg:device`. Both hands are considered.**
+
+This returns true only for the first tick right-clicked, representing the “number of ticks in non-input state”.
+
+To detect sustained presses like burst fire or full-auto fire, use `function egg:input/-pushed`.
+
+## egg:alignment
+
+**This module expresses the relationships between mobs based on the player.**
+
+Mob alignment will now be properly maintained in egg.alignment during the `minecraft:tick` update process immediately after spawning.
+
+Note that alignment can change at any time due to neutral mobs becoming hostile or being tamed.
+
+It can take the following values:
+
+|-1|0|1|
+|:-:|:-:|:-:|
+|Hostile to player|Neutral to player|Friendly to player|
+
+Furthermore, this alignment solely represents the relationship between the player and all other players as a single allied faction.
+
+It does not represent player-versus-player relationships between players themselves, nor does it represent hostile relationships unaffected by the player (such as wild wolves attacking skeletons).
+
+### `function egg:alignment/conflict`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`score #egg:alignment/conflict\|<<this --`|in|This alignment|
+|`score #egg:alignment/conflict\|<<that --`|in|That alignment|
+|`return`|out|Whether they are in conflict|
+
+**Checks whether it is in conflict with the target.**
+
+### `function egg:alignment/friendly`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`score #egg:alignment/friendly\|<<this --`|in|This alignment|
+|`score #egg:alignment/friendly\|<<that --`|in|That alignment|
+|`return`|out|Whether they are friendly or not.|
+
+**Checks whether they are friendly or not.**
+
+## egg:pointer
+
+**type** : `minecraft:snowball`
+
+**tag** : `egg.pointer`
+
+**This is a snowball pointer feature that references entities.**
+
+Using the snowball's NBT data tag “Owner”, you can switch the command executor `@s` to the referenced entity directly via `execute on origin`.
+
+Snowballs that become pointers become invisible, weightless entities that cannot be destroyed by collisions.
+
+If no longer needed, explicitly delete them using the kill command.
+
+### `function egg:pointer/-enable`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`return`|out|Succeeded or not.|
+
+**Begin using snowball `@s` as a pointer entity.**
+
+Pointer entities can directly specify the referenced entity using the `on origin` subcommand.
+
+## egg:shock
+
+**This module handles damage and knockback.**
+
+It inflicts damage and knockback within a range from the command execution point.
+
+Functions are split based on the presence of the attacking entity causing the damage and the relationship (alignment) between the attacking and target entities.
+
+While it has many arguments, most have default values, so it functions with just the minimum specifications of .distance and .amount. Default values for arguments are shown below.
+
+|Argument|Default Value|
+|:-|:-|
+|<<.distance|Required|
+|<<.amount|Required|
+|<<.source|Optional|
+|<<.namespace|“minecraft”|
+|<<.type|“generic”|
+|<<.scale|1.0|
+|<<.xv|0.0|
+|<<.yv|0.0|
+|<<.zv|0.0|
+
+Damage type is expressed by <<.namespace and <<.type, defaulting to `minecraft:generic`.
+
+Knockback is applied to entities within the effect radius, increasing in magnitude toward the source and decreasing with distance.
+
+Furthermore, the knockback momentum can be scaled using <<.scale and adjusted using <<.xv, <<.yv, <<.zv.
+
+Depending on implementation, upward knockback generally does not occur by default. Therefore, you must either use <<.yv to simulate upward knockback or position the effect source slightly below ground level.
+
+### `function egg:shock/give_by_no_one`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`storage egg:shock/give_by_no_one <<.distance`|in|Damage range|
+|`storage egg:shock/give_by_no_one <<.amount`|in|Damage amount|
+|`storage egg:shock/give_by_no_one <<.namespace`|in|Damage type (namespace)|
+|`storage egg:shock/give_by_no_one <<.type`|in|Damage type (type)|
+|`storage egg:shock/give_by_no_one <<.scale`|in|Knockback multiplier (scale > 0)|
+|`storage egg:shock/give_by_no_one <<.xv`|in|Knockback initial velocity x|
+|`storage egg:shock/give_by_no_one <<.yv`|in|Knockback initial velocity y|
+|`storage egg:shock/give_by_no_one <<.zv`|in|Knockback initial velocity z|
+|`return`|out|Succeeded or not.|
+
+**Inflicts damage and knockback on all entities within a radius of distance centered on the command position.**
+
+This damage processing involves no malicious intent on the part of the attacker, and the damaged entity accepts it as mere misfortune.
+
+### `function egg:shock/give_to_anyone`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`storage egg:shock/give_to_anyone <<.distance`|in|Damage range|
+|`storage egg:shock/give_to_anyone <<.amount`|in|Damage amount|
+|`storage egg:shock/give_to_anyone <<.source`|in|UUID of attacker entity|
+|`storage egg:shock/give_to_anyone <<.namespace`|in|Damage type (namespace)|
+|`storage egg:shock/give_to_anyone <<.type`|in|Damage type (type)|
+|`storage egg:shock/give_to_anyone <<.scale`|in|Knockback multiplier (scale > 0)|
+|`storage egg:shock/give_to_anyone <<.xv`|in|Knockback initial velocity x|
+|`storage egg:shock/give_to_anyone <<.yv`|in|Knockback initial velocity y|
+|`storage egg:shock/give_to_anyone <<.zv`|in|Knockback initial velocity z|
+|`return`|out|Succeeded or not.|
+
+**Inflicts damage and knockback on all entities within a radius of distance centered on the command position.**
+
+This damage processing involves no malicious intent on the part of the attacker, and the damaged entity accepts it as mere misfortune.
+
+### `function egg:shock/give_to_oppositions`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`storage egg:shock/give_to_oppositions <<.distance`|in|Damage range|
+|`storage egg:shock/give_to_oppositions <<.amount`|in|Damage amount|
+|`storage egg:shock/give_to_oppositions <<.source`|in|UUID of attacker entity|
+|`storage egg:shock/give_to_oppositions <<.namespace`|in|Damage type (namespace)|
+|`storage egg:shock/give_to_oppositions <<.type`|in|Damage type (type)|
+|`storage egg:shock/give_to_oppositions <<.scale`|in|Knockback multiplier (scale > 0)|
+|`storage egg:shock/give_to_oppositions <<.xv`|in|Knockback initial velocity x|
+|`storage egg:shock/give_to_oppositions <<.yv`|in|Knockback initial velocity y|
+|`storage egg:shock/give_to_oppositions <<.zv`|in|Knockback initial velocity z|
+|`return`|out|Succeeded or not.|
+
+**Inflicts damage and knockback on entities hostile to the attacker within a radius of distance centered on the command position.**
+
+This damage processing involves no malicious intent on the part of the attacker, and the damaged entity accepts it as mere misfortune.
+
+### `function egg:shock/give_to_others`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`storage egg:shock/give_to_others <<.distance`|in|Damage range|
+|`storage egg:shock/give_to_others <<.amount`|in|Damage amount|
+|`storage egg:shock/give_to_others <<.source`|in|UUID of attacker entity|
+|`storage egg:shock/give_to_others <<.namespace`|in|Damage type (namespace)|
+|`storage egg:shock/give_to_others <<.type`|in|Damage type (type)|
+|`storage egg:shock/give_to_others <<.scale`|in|Knockback multiplier (scale > 0)|
+|`storage egg:shock/give_to_others <<.xv`|in|Knockback initial velocity x|
+|`storage egg:shock/give_to_others <<.yv`|in|Knockback initial velocity y|
+|`storage egg:shock/give_to_others <<.zv`|in|Knockback initial velocity z|
+|`return`|out|Succeeded or not.|
+
+**Inflicts damage and knockback on attackers within range and entities that are not friendly.**
+
+This damage processing involves no malicious intent on the part of the attacker, and the damaged entity accepts it as mere misfortune.
+
+## egg:model
+
+**type** : `minecraft:block_display`
+
+**tag** : `egg.model`
+
+**This feature handles models created by BDEngine.**
+
+It targets data converted by mcbird/bde2egg.js from data packs containing model and animation information output by BDEngine.
+
+You can manipulate model entities generated by the `function #egg:bdengine/[model name (project name)]`.
+
+### `function egg:model/-enable`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`return`|out|Succeeded or not|
+
+**Enable the `egg:model` feature.**
+
+The block display entity for the target `@s` is enabled as egg.model,
+making all egg:model/-xxx features available.
+
+### `function egg:model/-delete`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`return`|out|Succeeded or not|
+
+**Delete the `egg:model` entity.**
+
+Since `egg:model` consists of multiple part entities,
+it cannot be completely deleted with a single /kill command.
+
+Always use this function to delete it.
+
+### `function egg:model/-rotate`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`return`|out|Succeeded or not|
+
+**Rotate the `egg:model` entity.**
+
+Since `egg:model` consists of multiple part entities,
+a single /rotate command cannot rotate it correctly.
+
+Always use this function to rotate it.
+
+### `function egg:model/-set_pose`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`storage egg:model/-set_pose <<pose`|in|Pose data|
+|`return`|out|Succeeded or not|
+
+**Set pose for the `egg:model` entity.**
+
+This data was generated using the animation features of BDEngine
+and converted for use in egg datapack via mcbird/bde2egg.js.
+
+### `function egg:model/-transform_with_interpolation`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`return`|out|Succeeded or not|
+
+**Performs linear interpolation on the `egg:model` entity.**
+
+Linear interpolation compliant with BDEngine's animation features is applied.
+
+### `function egg:model/-transform_without_interpolation`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`return`|out|Succeeded or not|
+
+**Prevents linear interpolation from being applied to the `egg:model` entity.**
+
+Specify to immediately reflect the pose without linear interpolation for initial pose setting.
+
+## egg:animatioin
+
+**type** : `minecraft:block_display`
+
+**tag** : ``egg:animation``
+
+**This feature handles animation created by BDEngine.**
+
+It targets data converted by mcbird/bde2egg.js from data packs containing model and animation information output by BDEngine.
+
+You can manipulate model entities generated by the `function #egg:bdengine/[model name (project name)]`.
+
+### `function egg:animation/-enable`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`return`|out|Succeeded or not|
+
+**Enable the `egg:animation` feature.**
+
+The block display entity for the target `@s` is enabled as `egg:animation`,
+making all features of `function egg:animation/-xxx available`.
+
+### `function egg:animation/-finished`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`return`|out|Whether playback has finished|
+
+**Checks whether animation playback has finished.**
+
+Checks whether the animation of a target `@s` with a repeat count set to anything other than -1 (infinite loop) has finished playing.
+
+To determine if it is currently playing due to controls like `function egg:animation/-play`, `function egg:animation/-stop`, or `function egg:animation/-pause`,
+check whether it has the `egg:animation.playing` tag.
+
+### `function egg:animation/-pause`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`return`|out|Succeeded or not|
+
+**Pause `egg:animation`.**
+
+Pauses the animation of the target `@s`.
+
+You can resume playback with `function egg:animation/-play`.
+
+### `function egg:animation/-play`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`return`|out|Succeeded or not|
+
+**Play `egg:animation`.**
+
+Plays the animation for the target `@s`.
+
+### `function egg:animation/-set`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`storage egg:animation/-set <<.repeat`|in|Repeat count (-1:infinity)|
+|`storage egg:animation/-set <<.path`|in|Path of animation data|
+|`return`|out|Succeeded or not|
+
+**Set the animation data to `egg:animation`.**
+
+Set the animation data for the target `@s`.
+
+This refers to data generated by BDEngine's animation feature
+and converted for egg format using mcbird/bde2egg.js.
+
+The path name is formed by concatenating the model name (project name) set in BDEngine
+and the animation data name with a hyphen, resulting in a string like [model name]-[animation data name].
+
+### `function egg:animation/-stop`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`return`|out|Succeeded or not|
+
+**Stop `egg:animation`.**
+
+Stop the animation of the target `@s`.
+
+## egg:nog
+
+**utilitys for easier handling of egg data packs.**
+
+Since egg data pack specifications are unique, this utility provides a simplified interface for more general handling, along with a collection of handy, miscellaneous, simple functions.
+
+### `function egg:nog/macro/new_animation`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`with repeat`|in|Number of repeats (-1: infinite loop)|
+|`with model`|in|Model name|
+|`with anime`|in|Animation name|
+|`return`|out|Succeeded or not|
+
+**Generates a model and plays the animation.**
+
+The generated model has the `__uninitialized` tag set, so please use it during initialization.
+
+After initialization completes, the `__uninitialized` tag must be removed.
+
+### `function egg:nog/macro/new_model`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`with model`|in|model_name|
+|`return`|out|Succeeded or not|
+
+**Creates a model.**
+
+The generated model has the `__uninitialized` tag set; use this during initialization.
+
+After initialization completes, you must remove the `__uninitialized` tag.
+
+### `function egg:nog/macro/play_animation`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`with repeat`|in|Number of repeats (-1: infinite loop)|
+|`with model`|in|Model name|
+|`with anime`|in|Animation name|
+|`return`|out|Succeeded or not|
+
+**Plays an animation.**
+
+Plays the animation for the target `@s` model.
+
+### `function egg:nog/compare_uuid`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`storage egg:nog/compare_uuid <<this`|in|This entity's UUID|
+|`storage egg:nog/compare_uuid <<that`|in|That entity's UUID|
+|`return`|out|UUIDs are Equals|
+
+**Compares whether two UUIDs are equal.**
+
+### `function egg:nog/match_uuid`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`storage egg:nog/match_uuid <<target`|in|Target entity's UUID.|
+|`return`|out|UUIDs are matched.|
+
+**Checks UUID whether `@s` matches target.**
+
+### `function egg:nog/origin`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`return`|out|Whether it has `on origin`|
+
+**Retrieves whether it has `on origin`.**
+
+### `function egg:nog/passengers`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`return`|out|Number of passengers|
+
+**Returns the number of passengers.**
+
+### `function egg:nog/scale_motion`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`storage egg:nog/scale_motion <<motion`|in|Motion data|
+|`storage egg:nog/scale_motion <<scale`|in|Scale|
+|`storage egg:nog/scale_motion >>motion`|out|Scaled Motion data|
+|`return`|out|Succeeded function or not|
+
+**Scale Motion.**
+
+Motion data correspond to the Rotation and Motion NBT data tags.
+
+### `function egg:nog/target`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`return`|out|Whether it has on target|
+
+**Retrieves whether it has on target.**
+
+### `function egg:nog/vehicle`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`return`|out|Whether it has on vehicle|
+
+**Retrieves whether it has on vehicle.**

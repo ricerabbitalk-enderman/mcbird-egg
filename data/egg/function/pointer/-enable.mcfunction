@@ -1,5 +1,6 @@
 ## Verify.
-execute unless entity @s[type=minecraft:snowball,tag=!egg.pointer] run return run function #egg:error {message:"@s can't initialize as egg.pointer."}
+execute unless entity @s[type=minecraft:snowball] run return run function egg:__/error/throw {message:"[ERROR] function egg:pointer/-enable (2): entity denied (expected type=minecraft:snowball)",selector:"@s"}
+execute if entity @s[tag=egg.pointer] run return run function egg:__/error/throw {message:"[ERROR] function egg:pointer/-enable (3): entity denied (unexpected tag=egg.pointer)",entity:"@s",nbt:"Tags"}
 
 ## Set data.
 data modify entity @s Invulnerable set value true

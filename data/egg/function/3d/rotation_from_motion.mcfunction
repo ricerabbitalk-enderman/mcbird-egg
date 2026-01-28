@@ -1,6 +1,6 @@
-## Get rotation from motion.
-# storage <<motion    <<| Motion data
-# storage >>rotation  >>| Rotation data
+## Verify.
+execute unless data storage egg:3d/rotation_from_motion <<motion run return run function egg:__/error/throw {message:"[ERROR] function egg:3d/rotation_from_motion (2): storage not found (storage egg:3d/rotation_from_motion <<motion)",storage:"egg:3d/rotation_from_motion",nbt:"<<motion"}
+execute unless data storage egg:3d/rotation_from_motion >>rotation run return run function egg:__/error/throw {message:"[ERROR] function egg:3d/rotation_from_motion (3): storage not found (storage egg:3d/rotation_from_motion >>rotation)",storage:"egg:3d/rotation_from_motion",nbt:">>rotation"}
 
 ## Fixed from double.
 # x

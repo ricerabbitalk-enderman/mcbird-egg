@@ -1,8 +1,7 @@
-## Get arcsin and arccos.
-# storage <<x~double     <<| Trigonometric value x ~double
-# storage >>asin~double  >>| Arcsin value ~double
-# storage >>acos~double  >>| Arccos value ~double
-# return                 >>| Success
+## Verify.
+execute unless data storage egg:math/asin_acos <<x~double run return run function egg:__/error/throw {message:"[ERROR] function egg:math/asin_acos (2): storage not found (storage egg:math/asin_acos <<x~double)",storage:"egg:math/asin_acos",nbt:"<<x~double"}
+execute unless data storage egg:math/asin_acos >>asin~double run return run function egg:__/error/throw {message:"[ERROR] function egg:math/asin_acos (3): storage not found (storage egg:math/asin_acos >>asin~double)",storage:"egg:math/asin_acos",nbt:">>asin~double"}
+execute unless data storage egg:math/asin_acos >>acos~double run return run function egg:__/error/throw {message:"[ERROR] function egg:math/asin_acos (4): storage not found (storage egg:math/asin_acos >>acos~double)",storage:"egg:math/asin_acos",nbt:">>acos~double"}
 
 ## Cast to fixed.
 data modify storage egg:__/point/fixed/from_double <<~double set from storage egg:math/asin_acos <<x~double

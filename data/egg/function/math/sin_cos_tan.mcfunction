@@ -1,9 +1,8 @@
-## Get sin and cos.
-# storage <<degree~double  <<| Unlimited degrees ~double
-# storage >>sin~double     >>| Sin value ~double
-# storage >>cos~double     >>| Cos value ~double
-# storage >>tan~double     >>| Tan value ~double
-# return                   >>| Success
+## Verify.
+execute unless data storage egg:math/sin_cos_tan <<degree~double run return run function egg:__/error/throw {message:"[ERROR] function egg:math/sin_cos_tan (2): storage not found (storage egg:math/sin_cos_tan <<degree~double)",storage:"egg:math/sin_cos_tan",nbt:"<<degree~double"}
+execute unless data storage egg:math/sin_cos_tan >>sin~double run return run function egg:__/error/throw {message:"[ERROR] function egg:math/sin_cos_tan (3): storage not found (storage egg:math/sin_cos_tan >>sin~double)",storage:"egg:math/sin_cos_tan",nbt:">>sin~double"}
+execute unless data storage egg:math/sin_cos_tan >>cos~double run return run function egg:__/error/throw {message:"[ERROR] function egg:math/sin_cos_tan (4): storage not found (storage egg:math/sin_cos_tan >>cos~double)",storage:"egg:math/sin_cos_tan",nbt:">>cos~double"}
+execute unless data storage egg:math/sin_cos_tan >>tan~double run return run function egg:__/error/throw {message:"[ERROR] function egg:math/sin_cos_tan (5): storage not found (storage egg:math/sin_cos_tan >>tan~double)",storage:"egg:math/sin_cos_tan",nbt:">>tan~double"}
 
 ## Cast to fixed.
 data modify storage egg:__/point/fixed/from_double <<~double set from storage egg:math/sin_cos_tan <<degree~double

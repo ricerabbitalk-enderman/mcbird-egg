@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "egg:input/__tick",
-    "egg:alignment/__tick"
+    "egg:alignment/__tick",
+    "egg:animation/__tick"
   ]
 }
