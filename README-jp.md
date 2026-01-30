@@ -1,6 +1,8 @@
 # mcbird-egg
 
-## egg, the EasyGoing Generator ver. 1.4.0 for 1.21.11
+## egg, the EasyGoing Generator ver. 1.5.0 for 1.21.11
+
+[English](README.md) / [日本語](README-jp.md)
 
 eggはデータパック研究所が提供する**データパックのためのデータパック**です。
 
@@ -597,6 +599,74 @@ BDEngine 上で設定したモデル名（プロジェクト名）とアニメ�
 
 対象 `@s` のアニメーションを停止します。
 
+## egg:pack
+
+**特定のデータ構造でを持つ NBT データタグを対象にしたモジュールです。**
+
+以下の 2 つの方法で設定された `egg:pack` パッケージが対象になります。
+
+**[名前指定]**
+
+```mcfunction
+data modify storage <namespace> <path> set value {name:"xxx:aaa/bbb/ccc",data:{...}}
+data modify entity @s data.<path> set value {name:"xxx:aaa/bbb/ccc",data:{...}}
+```
+
+**[別名指定]**
+
+```mcfunction
+data modify storage <namespace> <path> set value {namespace:xxx,alias:aaa_bbb_ccc,data:{...}}
+data modify entity @s data.<path> set value {namespace:xxx,alias:aaa_bbb_ccc,data:{...}}
+```
+
+これは関数タグ `function #xxx:alias/aaa_bbb_ccc` が定義されていることが前提になります。
+
+```json
+{
+"replace": true,
+"values": ["xxx:aaa/bbb/ccc"]
+}
+```
+
+名前指定は 7 階層までしか指定できません。
+
+data:{...} は汎用情報で `function egg:pack/call` で呼び出される時に `storage egg:pack/call <<` に設定されます。
+
+これにより状態と手続きをセットでデータとして管理することが可能になります。
+NBT データタグであればどこにでも保存でき、以下のようにして実行が可能です。
+
+```mcfunction
+data modify storage egg:pack/call <<pack set from entity @s data.<path>
+function egg:pack/call
+
+data modify storage egg:pack/call <<pack set from storage <namespace>.<path>
+function egg:pack/call
+```
+
+### `function egg:pack/call`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`storage egg:pack/call <<pack`|in|`egg:pack` パッケージ|
+|`return`|out|処理の成否|
+
+**`egg:pack` パッケージを実行します。**
+
+`storage egg:pack/call <<` に `data` の汎用情報を格納した状態で `egg:pack` パッケージに登録された関数を呼び出します。
+
+### `function egg:pack/preload`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`storage egg:pack/preload <<name`|in|関数名|
+|`return`|out|処理の成否|
+
+**関数名を事前登録します。**
+
+`egg:pack` パッケージは別名指定を使わない場合、解析に多くの処理を必要とし、初回の動作が重くなりやすいです。
+
+この関数で事前登録しておけばバックグラウンドで解析処理を行います。
+
 ## egg:nog
 
 **egg データパックをより簡単に扱うためのユーティリティです。**
@@ -706,3 +776,10 @@ Motion データはNBTデータタグの Motion に相当します。
 |`return`|out|`on vehicle` を持っているかどうか|
 
 **`on vehicle` を持っているかどうかを取得します。**
+
+### `function egg:nog/ride`
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`storage egg:nog/ride <<uuid`|in|`@s` に騎乗させるエンティティの UUID|
+|`return`|out|処理の成否|
+**`<<uuid` のエンティティを `@s` に騎乗させます。**

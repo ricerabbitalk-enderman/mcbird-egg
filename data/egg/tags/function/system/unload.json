@@ -3,6 +3,7 @@
   "values": [
     "egg:input/__unload",
     "egg:alignment/__unload",
-    "egg:animation/__unload"
+    "egg:animation/__unload",
+    "egg:pack/__unload"
   ]
 }

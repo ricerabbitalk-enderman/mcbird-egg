@@ -1,7 +1,6 @@
 ## Verify.
 execute unless data storage egg:nog/scale_motion <<motion run return run function egg:__/error/throw {message:"[ERROR] function egg:nog/scale_motion (2): storage not found (storage egg:nog/scale_motion <<motion)",storage:"egg:nog/scale_motion",nbt:"<<motion"}
 execute unless data storage egg:nog/scale_motion <<scale run return run function egg:__/error/throw {message:"[ERROR] function egg:nog/scale_motion (3): storage not found (storage egg:nog/scale_motion <<scale)",storage:"egg:nog/scale_motion",nbt:"<<scale"}
-execute unless data storage egg:nog/scale_motion >>motion run return run function egg:__/error/throw {message:"[ERROR] function egg:nog/scale_motion (4): storage not found (storage egg:nog/scale_motion >>motion)",storage:"egg:nog/scale_motion",nbt:">>motion"}
 
 ## Fixed from double.
 # x

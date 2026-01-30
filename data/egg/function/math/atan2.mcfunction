@@ -1,7 +1,6 @@
 ## Verify.
 execute unless data storage egg:math/atan2 <<x~double run return run function egg:__/error/throw {message:"[ERROR] function egg:math/atan2 (2): storage not found (storage egg:math/atan2 <<x~double)",storage:"egg:math/atan2",nbt:"<<x~double"}
 execute unless data storage egg:math/atan2 <<y~double run return run function egg:__/error/throw {message:"[ERROR] function egg:math/atan2 (3): storage not found (storage egg:math/atan2 <<y~double)",storage:"egg:math/atan2",nbt:"<<y~double"}
-execute unless data storage egg:math/atan2 >>atan~double run return run function egg:__/error/throw {message:"[ERROR] function egg:math/atan2 (4): storage not found (storage egg:math/atan2 >>atan~double)",storage:"egg:math/atan2",nbt:">>atan~double"}
 
 ## Cast to fixed.
 data modify storage egg:__/point/fixed/from_double <<~double set from storage egg:math/atan2 <<x~double

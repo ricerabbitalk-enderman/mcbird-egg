@@ -1,6 +1,6 @@
 # mcbird-egg
 
-## egg, the EasyGoing Generator ver. 1.4.0 for 1.21.11
+## egg, the EasyGoing Generator ver. 1.5.0 for 1.21.11
 
 [English](README.md) / [日本語](README-jp.md)
 
@@ -593,6 +593,75 @@ and the animation data name with a hyphen, resulting in a string like [model nam
 
 Stop the animation of the target `@s`.
 
+## egg:pack
+
+**This module targets NBT data tags with specific data structures.**
+
+It handles `egg:pack` packages configured in the following two ways:
+
+**[Name-based]**
+
+```mcfunction
+data modify storage <namespace> <path> set value {name:“xxx:aaa/bbb/ccc”,data:{...}}
+data modify entity @s data.<path> set value {name:“xxx:aaa/bbb/ccc”,data:{...}}
+```
+
+**[Alias Specification]**
+
+```mcfunction
+data modify storage <namespace? <path> set value {namespace:xxx,alias:aaa_bbb_ccc,data:{...}}
+data modify entity @s data.<path> set value {namespace:xxx,alias:aaa_bbb_ccc,data:{...}}
+```
+
+This assumes the function tag `function #xxx:alias/aaa_bbb_ccc` is defined.
+
+```json
+{
+  “replace”: true,
+  “values”: [“xxx:aaa/bbb/ccc”]
+}
+```
+
+Name specification is limited to 7 levels.
+
+data:{...} is generic information set to `storage egg:pack/call <<` when called by `function egg:pack/call`.
+
+This enables managing state and procedures as a set within data.
+
+It can be stored anywhere in NBT data tags and executed as follows.
+
+```mcfunction
+data modify storage egg:pack/call <<pack set from entity @s data.<path>
+function egg:pack/call
+
+data modify storage egg:pack/call <<pack set from storage <namespace>.<path>
+function egg:pack/call
+```
+
+### `function egg:pack/call`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`storage egg:pack/call <<pack`|in|`egg.pack` package|
+|`return`|out|Succeeded or not|
+
+**Executes the `egg.pack` package.**
+
+Calls a function registered in the `egg:pack` package while storing generic information about `data` in `storage egg:pack/call <<`.
+
+### `function egg:pack/preload`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`storage egg:pack/preload <<name`|in|Function name|
+|`return`|out|Succeeded or not|
+
+**Pre-registers the function name.**
+
+The `egg:pack` package requires significant parsing when aliases aren't specified, often causing heavy initial load.
+
+Pre-registering with this function performs parsing in the background.
+
 ## egg:nog
 
 **utilitys for easier handling of egg data packs.**
@@ -703,3 +772,12 @@ Motion data correspond to the Rotation and Motion NBT data tags.
 |`return`|out|Whether it has on vehicle|
 
 **Retrieves whether it has on vehicle.**
+
+### `function egg:nog/ride`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`storage egg:nog/ride <<uuid`|in|UUID of the entity to mount onto `@s`|
+|`return`|out|Success or failure of the operation|
+
+**Mounts the entity specified by `<<uuid` onto `@s`.**

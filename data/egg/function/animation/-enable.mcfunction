@@ -12,7 +12,7 @@ scoreboard players set @s egg.animation.__page 0
 scoreboard players set @s egg.animation.__count 0
 scoreboard players set @s egg.animation.__repeat 0
 ## Set data.
-data modify entity @s data set value {egg:{animation:{}}}
+data modify entity @s data merge value {egg:{animation:{}}}
 ## for Debug.
 #data modify entity @s data.egg.animation.__debug set value {}
 ## Add tags.

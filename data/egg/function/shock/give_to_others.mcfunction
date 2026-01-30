@@ -8,6 +8,9 @@ execute unless data storage egg:shock/give_to_others <<.xv run data modify stora
 execute unless data storage egg:shock/give_to_others <<.yv run data modify storage egg:shock/give_to_others <<.yv set value 0.0
 execute unless data storage egg:shock/give_to_others <<.zv run data modify storage egg:shock/give_to_others <<.zv set value 0.0
 
+## Unpack.
+execute if data storage egg:pack/call << run data modify storage egg:shock/give_to_others << set from storage egg:pack/call <<
+
 ## Give damage.
 data modify storage egg:shock << set from storage egg:shock/give_to_others <<
 data modify storage egg:pointer/-enable <<uuid set from storage egg:shock <<.source

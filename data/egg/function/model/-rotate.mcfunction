@@ -7,4 +7,5 @@ execute unless entity @s[tag=egg.model] run return run function egg:__/error/thr
 ## Rotate.
 rotate @s ~ ~
 data modify storage egg:model/-rotate rotation set from entity @s Rotation
-return run function egg:model/__/-loop_to_rotate
+function egg:model/__/-loop_to_rotate
+return 1

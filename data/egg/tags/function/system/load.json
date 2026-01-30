@@ -3,6 +3,7 @@
   "values": [
     "egg:input/__load",
     "egg:alignment/__load",
-    "egg:animation/__load"
+    "egg:animation/__load",
+    "egg:pack/__load"
   ]
 }

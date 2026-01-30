@@ -1,6 +1,5 @@
 ## Verify.
 execute unless data storage egg:3d/motion_from_rotation <<rotation run return run function egg:__/error/throw {message:"[ERROR] function egg:3d/motion_from_rotation (2): storage not found (storage egg:3d/motion_from_rotation <<rotation)",storage:"egg:3d/motion_from_rotation",nbt:"<<rotation"}
-execute unless data storage egg:3d/motion_from_rotation >>motion run return run function egg:__/error/throw {message:"[ERROR] function egg:3d/motion_from_rotation (3): storage not found (storage egg:3d/motion_from_rotation >>motion)",storage:"egg:3d/motion_from_rotation",nbt:">>motion"}
 
 ## Fixed from double.
 # yaw angle

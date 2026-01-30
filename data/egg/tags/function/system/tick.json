@@ -3,6 +3,7 @@
   "values": [
     "egg:input/__tick",
     "egg:alignment/__tick",
-    "egg:animation/__tick"
+    "egg:animation/__tick",
+    "egg:pack/__tick"
   ]
 }

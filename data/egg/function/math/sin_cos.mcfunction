@@ -1,7 +1,5 @@
 ## Verify.
 execute unless data storage egg:math/sin_cos <<degree~double run return run function egg:__/error/throw {message:"[ERROR] function egg:math/sin_cos (2): storage not found (storage egg:math/sin_cos <<degree~double)",storage:"egg:math/sin_cos",nbt:"<<degree~double"}
-execute unless data storage egg:math/sin_cos >>sin~double run return run function egg:__/error/throw {message:"[ERROR] function egg:math/sin_cos (3): storage not found (storage egg:math/sin_cos >>sin~double)",storage:"egg:math/sin_cos",nbt:">>sin~double"}
-execute unless data storage egg:math/sin_cos >>cos~double run return run function egg:__/error/throw {message:"[ERROR] function egg:math/sin_cos (4): storage not found (storage egg:math/sin_cos >>cos~double)",storage:"egg:math/sin_cos",nbt:">>cos~double"}
 
 ## Cast to fixed.
 data modify storage egg:__/point/fixed/from_double <<~double set from storage egg:math/sin_cos <<degree~double
