@@ -11,8 +11,6 @@ execute unless data storage egg:shock/give_to_oppositions <<.zv run data modify 
 ## Unpack.
 execute if data storage egg:pack/call << run data modify storage egg:shock/give_to_oppositions << set from storage egg:pack/call <<
 
-tellraw @a ["shock:",{storage:"egg:shock/give_to_oppositions",nbt:"<<"}]
-
 ## Give damage.
 data modify storage egg:shock << set from storage egg:shock/give_to_oppositions <<
 data modify storage egg:pointer/-enable <<uuid set from storage egg:shock <<.source
