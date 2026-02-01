@@ -460,6 +460,36 @@ x, y の数値差が (10000, 0.0001) のような極端な値の場合に注意�
 
 このダメージ処理には「攻撃者の害意」が存在し、ダメージを受けたエンティティは攻撃者を敵と認識する可能性があります。
 
+### `function egg:shock/_give_to_target`
+### `function egg:shock/_give_confuse_to_anyone`
+### `function egg:shock/_give_confuse_to_oppositions`
+### `function egg:shock/_give_confuse_to_others`
+### `function egg:shock/_give_confuse_to_target`
+### `function egg:shock/_give_illusion_to_anyone`
+### `function egg:shock/_give_illusion_to_oppositions`
+### `function egg:shock/_give_illusion_to_others`
+### `function egg:shock/_give_illusion_to_target`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`storage egg:shock/give_xxxx <<.distance`|in|効果範囲 (distance >= 0)|
+|`storage egg:shock/give_xxxx <<.amount`|in|ダメージ量 (amount > 0)|
+|`storage egg:shock/give_xxxx <<.source`|in|攻撃者エンティティ UUID|
+|`storage egg:shock/give_xxxx <<.namespace`|in|ダメージタイプ名前空間|
+|`storage egg:shock/give_xxxx <<.type`|in|ダメージタイプ名|
+|`storage egg:shock/give_xxxx <<.scale`|in|ノックバック乗算率 (scale > 0)|
+|`storage egg:shock/give_xxxx <<.xv`|in|ノックバック x 加算速度|
+|`storage egg:shock/give_xxxx <<.yv`|in|ノックバック y 加算速度|
+|`storage egg:shock/give_xxxx <<.zv`|in|ノックバック z 加算速度|
+|`return`|out|処理の成否|
+
+**これらは検証不足の関数です。**
+
+`to_target` は攻撃者が攻撃対象にしているエンティティのみを狙います。
+`give_confuse` はダメージを受けたエンティティが攻撃対象をランダムに変更しようとします。
+`give_illusion` はダメージを受けたエンティティが攻撃対象を攻撃者の利益になるランダムなエンティティに変更しようとします。
+ランダムな対象が目視できない位置にいて見失った場合など、攻撃対象が必ずしも変更されるとは限りません。
+
 ## egg:model
 
 **type** : `minecraft:block_display`

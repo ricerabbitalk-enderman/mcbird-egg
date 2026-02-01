@@ -2,8 +2,8 @@
 execute if data storage egg:pack/call << run data modify storage egg:shock/give_to_anyone << set from storage egg:pack/call <<
 
 ## Verify.
-execute unless data storage egg:shock/give_to_anyone <<.distance run return run function egg:__/error/throw {message:"[ERROR] function egg:shock/give_to_anyone (2): storage not found (storage egg:shock/give_to_anyone <<.distance)",storage:"egg:shock/give_to_anyone",nbt:"<<.distance"}
-execute unless data storage egg:shock/give_to_anyone <<.amount run return run function egg:__/error/throw {message:"[ERROR] function egg:shock/give_to_anyone (3): storage not found (storage egg:shock/give_to_anyone <<.amount)",storage:"egg:shock/give_to_anyone",nbt:"<<.amount"}
+execute unless data storage egg:shock/give_to_anyone <<.distance run return run function egg:__/error/throw {message:"[ERROR] function egg:shock/give_to_anyone (5): storage not found (storage egg:shock/give_to_anyone <<.distance)",storage:"egg:shock/give_to_anyone",nbt:"<<.distance"}
+execute unless data storage egg:shock/give_to_anyone <<.amount run return run function egg:__/error/throw {message:"[ERROR] function egg:shock/give_to_anyone (6): storage not found (storage egg:shock/give_to_anyone <<.amount)",storage:"egg:shock/give_to_anyone",nbt:"<<.amount"}
 execute unless data storage egg:shock/give_to_anyone <<.namespace run data modify storage egg:shock/give_to_anyone <<.namespace set value "minecraft"
 execute unless data storage egg:shock/give_to_anyone <<.type run data modify storage egg:shock/give_to_anyone <<.type set value "generic"
 execute unless data storage egg:shock/give_to_anyone <<.scale run data modify storage egg:shock/give_to_anyone <<.scale set value 1.0

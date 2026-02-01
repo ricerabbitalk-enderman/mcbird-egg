@@ -454,6 +454,36 @@ This damage processing involves no malicious intent on the part of the attacker,
 
 This damage processing involves no malicious intent on the part of the attacker, and the damaged entity accepts it as mere misfortune.
 
+### `function egg:shock/_give_to_target`
+### `function egg:shock/_give_confuse_to_anyone`
+### `function egg:shock/_give_confuse_to_oppositions`
+### `function egg:shock/_give_confuse_to_others`
+### `function egg:shock/_give_confuse_to_target`
+### `function egg:shock/_give_illusion_to_anyone`
+### `function egg:shock/_give_illusion_to_oppositions`
+### `function egg:shock/_give_illusion_to_others`
+### `function egg:shock/_give_illusion_to_target`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`storage egg:shock/give_xxxx <<.distance`|in|Damage range|
+|`storage egg:shock/give_xxxx <<.amount`|in|Damage amount|
+|`storage egg:shock/give_xxxx <<.source`|in|UUID of attacker entity|
+|`storage egg:shock/give_xxxx <<.namespace`|in|Damage type (namespace)|
+|`storage egg:shock/give_xxxx <<.type`|in|Damage type (type)|
+|`storage egg:shock/give_xxxx <<.scale`|in|Knockback multiplier (scale > 0)|
+|`storage egg:shock/give_xxxx <<.xv`|in|Knockback initial velocity x|
+|`storage egg:shock/give_xxxx <<.yv`|in|Knockback initial velocity y|
+|`storage egg:shock/give_xxxx <<.zv`|in|Knockback initial velocity z|
+|`return`|out|Succeeded or not.|
+
+**These are functions with insufficient verification.**
+
+`to_target` targets only the entity the attacker is currently targeting.
+`give_confuse` causes the damaged entity to attempt to randomly change its target.
+`give_illusion` causes the damaged entity to attempt to change its target to a random entity that benefits the attacker.
+The target may not always change, such as if the random target is out of sight and lost.
+
 ## egg:model
 
 **type** : `minecraft:block_display`
