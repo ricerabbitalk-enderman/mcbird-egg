@@ -5,7 +5,7 @@ execute if entity @s[tag=egg.model] run return run function egg:__/error/throw {
 ## Set data.
 data modify entity @s data merge value {egg:{model:{}}}
 ## for Debug.
-#execute run data modify entity @s data.egg.model.__debug set value {}
+execute run data modify entity @s data.egg.model.__debug set value {}
 ## Add tag.
 tag @s add egg.model
 

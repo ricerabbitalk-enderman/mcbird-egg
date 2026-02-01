@@ -1,3 +1,9 @@
+## Publish ID.
+# Mainhand.
+function egg:input/__/-update_mainhand
+# Offhand.
+function egg:input/__/-update_offhand
+
 ## Save Previous Input.
 scoreboard players operation @s egg.input.-1 = @s egg.input.+0
 

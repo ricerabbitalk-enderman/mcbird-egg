@@ -1,6 +1,3 @@
-## Unpack.
-execute if data storage egg:pack/call << run data modify storage egg:shock/give_to_oppositions << set from storage egg:pack/call <<
-
 ## Verify.
 execute unless data storage egg:shock/give_to_oppositions <<.distance run return run function egg:__/error/throw {message:"[ERROR] function egg:shock/give_to_oppositions (2): storage not found (storage egg:shock/give_to_oppositions <<.distance)",storage:"egg:shock/give_to_oppositions",nbt:"<<.distance"}
 execute unless data storage egg:shock/give_to_oppositions <<.amount run return run function egg:__/error/throw {message:"[ERROR] function egg:shock/give_to_oppositions (3): storage not found (storage egg:shock/give_to_oppositions <<.amount)",storage:"egg:shock/give_to_oppositions",nbt:"<<.amount"}
@@ -10,6 +7,9 @@ execute unless data storage egg:shock/give_to_oppositions <<.scale run data modi
 execute unless data storage egg:shock/give_to_oppositions <<.xv run data modify storage egg:shock/give_to_oppositions <<.xv set value 0.0
 execute unless data storage egg:shock/give_to_oppositions <<.yv run data modify storage egg:shock/give_to_oppositions <<.yv set value 0.0
 execute unless data storage egg:shock/give_to_oppositions <<.zv run data modify storage egg:shock/give_to_oppositions <<.zv set value 0.0
+
+## Unpack.
+execute if data storage egg:pack/call << run data modify storage egg:shock/give_to_oppositions << set from storage egg:pack/call <<
 
 ## Give damage.
 data modify storage egg:shock << set from storage egg:shock/give_to_oppositions <<

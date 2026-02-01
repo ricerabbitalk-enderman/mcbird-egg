@@ -1,6 +1,6 @@
 # mcbird-egg
 
-## egg, the EasyGoing Generator ver. 1.5.0 for 1.21.11
+## egg, the EasyGoing Generator ver. 1.5.2 for 1.21.11
 
 [English](README.md) / [日本語](README-jp.md)
 
@@ -272,6 +272,31 @@ x, y の数値差が (10000, 0.0001) のような極端な値の場合に注意�
 
 溜め撃ちやフルオート射撃のような押しっぱなしを感知する場合は `function egg:input/-pushed` を使ってください。
 
+### `function egg:input/-mainhand`
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`return`|out|メインハンドのアイテム識別子|
+
+**メインハンドのアイテム識別子を取得します。**
+
+これは、溜め撃ち時に右クリックを押したままホットバーを移動したりFキーでアイテムを交換した際に、
+不適切なアイテムに切り替わったと判断し、溜め撃ちを中断するかどうか判断する用途の識別子です。
+
+この識別子は、メインハンドかオフハンドに配置された egg:device に対して自動で配布されます。
+
+### `function egg:input/-offhand`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`return`|out|オフハンドのアイテム識別子|
+
+**オフハンドのアイテム識別子を取得します。**
+
+これは、溜め撃ち時に右クリックを押したままホットバーを移動したりFキーでアイテムを交換した際に、
+不適切なアイテムに切り替わったと判断し、溜め撃ちを中断するかどうか判断する用途の識別子です。
+
+この識別子は、オフハンドかオフハンドに配置された egg:device に対して自動で配布されます。
+
 ## egg:alignment
 
 **プレイヤーを基準としたモブの関係性を表現するモジュールです。**
@@ -470,6 +495,25 @@ BDEngine で出力されたモデル・アニメ情報が格納されたデー�
 単体の `/kill` では完全に削除できません。
 
 必ずこの関数で削除してください。
+
+### `function egg:model/-show`
+
+|Parameter|Type|Description|
+|:-|:-|:-|
+|`storage egg:model/-show <<looks`|in|表示エンティティの見た目データ|
+|`return`|out|処理の成否|
+
+**egg.model エンティティに見た目を設定します。**
+
+BDEngine のモデル機能で生成されたデータについて
+mcbird/bde2egg.js で egg データパック用に変換して得られるデフォルトの見た目は `storage egg:bdengine <モデル名>` に格納されています。
+
+そのストレージを `storage egg:model/-show <<looks` にコピーすることでデフォルトの見た目にできます。
+
+デフォルト以外の見た目にしたい場合は `function egg:bdengine/<モデル名>/looks.mcfunction` を参考に改変してください。
+配列状のデータとなっていますが、**配列の順序を変更することはできない**ので十分に注意してください。
+また、BDEngine 側で `data.__alias` を設定していた場合、判別用の目印として `alias` も出力されます。
+同じ形状の表示ディスプレイを区別するためにご利用ください。
 
 ### `function egg:model/-rotate`
 

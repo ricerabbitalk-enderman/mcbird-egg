@@ -9,4 +9,7 @@ execute unless data storage egg:model/-set_pose <<pose run return run function e
 data modify storage egg:model/__/-loop_to_set_pose data set from storage egg:model/-set_pose <<pose
 
 ## Set Pose.
-execute on passengers run return run function egg:model/__/-loop_to_set_pose
+execute on passengers run function egg:model/__/-loop_to_set_pose
+
+## Success.
+return 1
