@@ -307,7 +307,7 @@ x, y の数値差が (10000, 0.0001) のような極端な値の場合に注意�
 
 |-1|0|1|
 |:-:|:-:|:-:|
-|プレイヤーと敵対|プレイヤーと中立|プレイヤーと友好|
+|プレイヤーと敵対|プレイヤーと無関係|プレイヤーと友好|
 
 また、あくまでプレイヤー全員を１つの味方勢力とした関係性のみの表現であり、PvP前提であるプレイヤー同士の関係や、プレイヤー側に影響のない敵対関係（スケルトンを襲う野生のオオカミなど）を表現することはありません。
 
@@ -393,7 +393,7 @@ x, y の数値差が (10000, 0.0001) のような極端な値の場合に注意�
 |`storage egg:shock/give_by_no_one <<.amount`|in|ダメージ量 (amount > 0)|
 |`storage egg:shock/give_by_no_one <<.namespace`|in|ダメージタイプ名前空間|
 |`storage egg:shock/give_by_no_one <<.type`|in|ダメージタイプ名|
-|`storage egg:shock/give_by_no_one <<.scale`|in|ノックバック乗算率 (scale > 0)|
+|`storage egg:shock/give_by_no_one <<.scale`|in|ノックバック乗算率 (scale >= 0)|
 |`storage egg:shock/give_by_no_one <<.xv`|in|ノックバック x 加算速度|
 |`storage egg:shock/give_by_no_one <<.yv`|in|ノックバック y 加算速度|
 |`storage egg:shock/give_by_no_one <<.zv`|in|ノックバック z 加算速度|
@@ -412,7 +412,7 @@ x, y の数値差が (10000, 0.0001) のような極端な値の場合に注意�
 |`storage egg:shock/give_to_anyone <<.source`|in|攻撃者エンティティ UUID|
 |`storage egg:shock/give_to_anyone <<.namespace`|in|ダメージタイプ名前空間|
 |`storage egg:shock/give_to_anyone <<.type`|in|ダメージタイプ名|
-|`storage egg:shock/give_to_anyone <<.scale`|in|ノックバック乗算率 (scale > 0)|
+|`storage egg:shock/give_to_anyone <<.scale`|in|ノックバック乗算率 (scale >= 0)|
 |`storage egg:shock/give_to_anyone <<.xv`|in|ノックバック x 加算速度|
 |`storage egg:shock/give_to_anyone <<.yv`|in|ノックバック y 加算速度|
 |`storage egg:shock/give_to_anyone <<.zv`|in|ノックバック z 加算速度|
@@ -431,7 +431,7 @@ x, y の数値差が (10000, 0.0001) のような極端な値の場合に注意�
 |`storage egg:shock/give_to_oppositions <<.source`|in|攻撃者エンティティ UUID|
 |`storage egg:shock/give_to_oppositions <<.namespace`|in|ダメージタイプ名前空間|
 |`storage egg:shock/give_to_oppositions <<.type`|in|ダメージタイプ名|
-|`storage egg:shock/give_to_oppositions <<.scale`|in|ノックバック乗算率 (scale > 0)|
+|`storage egg:shock/give_to_oppositions <<.scale`|in|ノックバック乗算率 (scale >= 0)|
 |`storage egg:shock/give_to_oppositions <<.xv`|in|ノックバック x 加算速度|
 |`storage egg:shock/give_to_oppositions <<.yv`|in|ノックバック y 加算速度|
 |`storage egg:shock/give_to_oppositions <<.zv`|in|ノックバック z 加算速度|
@@ -450,7 +450,7 @@ x, y の数値差が (10000, 0.0001) のような極端な値の場合に注意�
 |`storage egg:shock/give_to_others <<.source`|in|攻撃者エンティティ UUID|
 |`storage egg:shock/give_to_others <<.namespace`|in|ダメージタイプ名前空間|
 |`storage egg:shock/give_to_others <<.type`|in|ダメージタイプ名|
-|`storage egg:shock/give_to_others <<.scale`|in|ノックバック乗算率 (scale > 0)|
+|`storage egg:shock/give_to_others <<.scale`|in|ノックバック乗算率 (scale >= 0)|
 |`storage egg:shock/give_to_others <<.xv`|in|ノックバック x 加算速度|
 |`storage egg:shock/give_to_others <<.yv`|in|ノックバック y 加算速度|
 |`storage egg:shock/give_to_others <<.zv`|in|ノックバック z 加算速度|
@@ -477,7 +477,7 @@ x, y の数値差が (10000, 0.0001) のような極端な値の場合に注意�
 |`storage egg:shock/give_xxxx <<.source`|in|攻撃者エンティティ UUID|
 |`storage egg:shock/give_xxxx <<.namespace`|in|ダメージタイプ名前空間|
 |`storage egg:shock/give_xxxx <<.type`|in|ダメージタイプ名|
-|`storage egg:shock/give_xxxx <<.scale`|in|ノックバック乗算率 (scale > 0)|
+|`storage egg:shock/give_xxxx <<.scale`|in|ノックバック乗算率 (scale >= 0)|
 |`storage egg:shock/give_xxxx <<.xv`|in|ノックバック x 加算速度|
 |`storage egg:shock/give_xxxx <<.yv`|in|ノックバック y 加算速度|
 |`storage egg:shock/give_xxxx <<.zv`|in|ノックバック z 加算速度|
