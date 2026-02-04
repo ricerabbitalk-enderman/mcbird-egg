@@ -387,7 +387,7 @@ Depending on implementation, upward knockback generally does not occur by defaul
 |`storage egg:shock/give_by_no_one <<.amount`|in|Damage amount|
 |`storage egg:shock/give_by_no_one <<.namespace`|in|Damage type (namespace)|
 |`storage egg:shock/give_by_no_one <<.type`|in|Damage type (type)|
-|`storage egg:shock/give_by_no_one <<.scale`|in|Knockback multiplier (scale > 0)|
+|`storage egg:shock/give_by_no_one <<.scale`|in|Knockback multiplier (scale >= 0)|
 |`storage egg:shock/give_by_no_one <<.xv`|in|Knockback initial velocity x|
 |`storage egg:shock/give_by_no_one <<.yv`|in|Knockback initial velocity y|
 |`storage egg:shock/give_by_no_one <<.zv`|in|Knockback initial velocity z|
@@ -406,7 +406,7 @@ This damage processing involves no malicious intent on the part of the attacker,
 |`storage egg:shock/give_to_anyone <<.source`|in|UUID of attacker entity|
 |`storage egg:shock/give_to_anyone <<.namespace`|in|Damage type (namespace)|
 |`storage egg:shock/give_to_anyone <<.type`|in|Damage type (type)|
-|`storage egg:shock/give_to_anyone <<.scale`|in|Knockback multiplier (scale > 0)|
+|`storage egg:shock/give_to_anyone <<.scale`|in|Knockback multiplier (scale >= 0)|
 |`storage egg:shock/give_to_anyone <<.xv`|in|Knockback initial velocity x|
 |`storage egg:shock/give_to_anyone <<.yv`|in|Knockback initial velocity y|
 |`storage egg:shock/give_to_anyone <<.zv`|in|Knockback initial velocity z|
@@ -425,7 +425,7 @@ This damage processing involves no malicious intent on the part of the attacker,
 |`storage egg:shock/give_to_oppositions <<.source`|in|UUID of attacker entity|
 |`storage egg:shock/give_to_oppositions <<.namespace`|in|Damage type (namespace)|
 |`storage egg:shock/give_to_oppositions <<.type`|in|Damage type (type)|
-|`storage egg:shock/give_to_oppositions <<.scale`|in|Knockback multiplier (scale > 0)|
+|`storage egg:shock/give_to_oppositions <<.scale`|in|Knockback multiplier (scale >= 0)|
 |`storage egg:shock/give_to_oppositions <<.xv`|in|Knockback initial velocity x|
 |`storage egg:shock/give_to_oppositions <<.yv`|in|Knockback initial velocity y|
 |`storage egg:shock/give_to_oppositions <<.zv`|in|Knockback initial velocity z|
@@ -444,7 +444,7 @@ This damage processing involves no malicious intent on the part of the attacker,
 |`storage egg:shock/give_to_others <<.source`|in|UUID of attacker entity|
 |`storage egg:shock/give_to_others <<.namespace`|in|Damage type (namespace)|
 |`storage egg:shock/give_to_others <<.type`|in|Damage type (type)|
-|`storage egg:shock/give_to_others <<.scale`|in|Knockback multiplier (scale > 0)|
+|`storage egg:shock/give_to_others <<.scale`|in|Knockback multiplier (scale >= 0)|
 |`storage egg:shock/give_to_others <<.xv`|in|Knockback initial velocity x|
 |`storage egg:shock/give_to_others <<.yv`|in|Knockback initial velocity y|
 |`storage egg:shock/give_to_others <<.zv`|in|Knockback initial velocity z|
@@ -471,7 +471,7 @@ This damage processing involves no malicious intent on the part of the attacker,
 |`storage egg:shock/give_xxxx <<.source`|in|UUID of attacker entity|
 |`storage egg:shock/give_xxxx <<.namespace`|in|Damage type (namespace)|
 |`storage egg:shock/give_xxxx <<.type`|in|Damage type (type)|
-|`storage egg:shock/give_xxxx <<.scale`|in|Knockback multiplier (scale > 0)|
+|`storage egg:shock/give_xxxx <<.scale`|in|Knockback multiplier (scale >= 0)|
 |`storage egg:shock/give_xxxx <<.xv`|in|Knockback initial velocity x|
 |`storage egg:shock/give_xxxx <<.yv`|in|Knockback initial velocity y|
 |`storage egg:shock/give_xxxx <<.zv`|in|Knockback initial velocity z|
